@@ -9,7 +9,7 @@ public class BillingAppBackEndApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BillingAppBackEndApplication.class, args);
 
-		System.out.println("test git hub");
+		System.out.println("test git hub-second");
 	}
 
 }
