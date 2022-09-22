@@ -1,4 +1,4 @@
-package com.bilingApp.backend;
+package com.billingApp.backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,7 +9,7 @@ public class BillingAppBackEndApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BillingAppBackEndApplication.class, args);
 
-		System.out.println("test git hub-second");
+		// System.out.println("test git hub");
 	}
 
 }
