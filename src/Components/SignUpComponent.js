@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-
+import axios from "axios";
 import { auth } from "../firebase";
 import LogInComponent from "./LogInComponent";
 import {
@@ -42,6 +42,19 @@ const SignUpComponent = () => {
   const handleOnChange = (e) => {
     e.preventDefault();
     setUser({ ...user, [e.target.name]: e.target.value });
+
+    //console.log("i", e.target.value);
+  };
+
+  const saveUserToDB = async () => {
+    await axios
+      .post("http://localhost:8181/saveUser", user)
+      .then((response) => {
+        setUser(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -84,7 +97,9 @@ const SignUpComponent = () => {
                     </label>
                     <input
                       ref={emailRef}
+                      onChange={handleOnChange}
                       type="email"
+                      name="email"
                       id="typeEmailX-2"
                       className="form-control form-control-lg"
                     />
@@ -99,7 +114,9 @@ const SignUpComponent = () => {
                     </label>
                     <input
                       ref={passwordRef}
+                      onChange={handleOnChange}
                       type="password"
+                      name="password"
                       id="typePasswordX-2"
                       className="form-control form-control-lg"
                     />
@@ -113,6 +130,7 @@ const SignUpComponent = () => {
                     onClick={() => {
                       register();
                       setSignIn(true);
+                      saveUserToDB();
                     }}
                   >
                     Create Account

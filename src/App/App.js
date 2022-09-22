@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import NavBarComponent from "../Components/NavBarComponent";
 
 import LogInComponent from "../Components/LogInComponent";
+import FooterComponent from "../Components/FooterComponent";
 
 function App() {
   const user = useSelector(selectUser);
@@ -38,6 +39,7 @@ function App() {
         <>
           <NavBarComponent />
           <HomeComponent />
+          <FooterComponent />
         </>
       )}
     </div>

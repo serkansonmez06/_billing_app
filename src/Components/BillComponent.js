@@ -1,11 +1,11 @@
 import React from "react";
 
-function BillComponent() {
+const BillComponent = () => {
   return (
-    <div>
+    <div className="vh-100">
       <h1>BillComponent</h1>
     </div>
   );
-}
+};
 
 export default BillComponent;
