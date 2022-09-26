@@ -20,7 +20,7 @@ import com.billingApp.backend.service.AdminService;
 
 @RestController
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3002")
 public class AdminController {
 	// inject service
 	@Autowired
