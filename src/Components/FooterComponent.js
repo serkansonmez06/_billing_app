@@ -15,7 +15,7 @@ const FooterComponent = () => {
     marginTop: "-8px",
   };
   return (
-    <div id="footer">
+    <div>
       <div style={styleFooter} className="position-sticky-bottom">
         <div
           className="d-flex justify-content-between"
@@ -75,7 +75,7 @@ const FooterComponent = () => {
             to="/contact"
             style={linkStyle}
             data-toggle="tooltip"
-            title="Admin info"
+            title="Contact US"
           >
             Contact Us &nbsp;&nbsp;&nbsp;
           </Link>

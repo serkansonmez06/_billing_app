@@ -25,6 +25,8 @@ const NavBarComponent = () => {
       .get("http://localhost:8181/admin")
       .then((response) => {
         setAdminEmailDb({ email: response.data.at(-1) });
+        //  console.log(response.data.at(-1));
+        //console.log(response.data);
       })
       .catch((err) => console.log(err));
   };
@@ -42,12 +44,7 @@ const NavBarComponent = () => {
         />
 
         <NavbarText style={{ color: "white" }}>
-          <Link
-            to="/"
-            style={linkStyle}
-            data-toggle="tooltip"
-            title="Home of the book"
-          >
+          <Link to="/" style={linkStyle} data-toggle="tooltip" title="Home">
             &nbsp; Home &nbsp;&nbsp;
           </Link>
         </NavbarText>
@@ -59,12 +56,7 @@ const NavBarComponent = () => {
                 marginRight: "5px",
               }}
             >
-              <Link
-                to="/search"
-                style={linkStyle}
-                data-toggle="tooltip"
-                title="Search any books"
-              >
+              <Link to="/bill" style={linkStyle} data-toggle="tooltip" title="">
                 | &nbsp;&nbsp; My-Bill &nbsp;&nbsp;
               </Link>
 
@@ -73,7 +65,7 @@ const NavBarComponent = () => {
                   to="/users"
                   style={{ color: "white", textDecoration: "none" }}
                   data-toggle="tooltip"
-                  title="Admin info"
+                  title="Users"
                 >
                   |&nbsp;&nbsp; Users &nbsp; &nbsp;&nbsp;
                 </Link>
@@ -82,22 +74,12 @@ const NavBarComponent = () => {
                   to="/"
                   style={{ color: "white", textDecoration: "none" }}
                   data-toggle="tooltip"
-                  title="Admin info"
+                  title=""
                 >
                   &nbsp;&nbsp;&nbsp;
                 </Link>
               )}
             </NavbarText>
-            {/* <NavbarText style={{ color: "white" }}>
-              <Link
-                to="notes"
-                style={linkStyle}
-                data-toggle="tooltip"
-                title="Create new note"
-              >
-                | &nbsp;&nbsp; Notes &nbsp;&nbsp;
-              </Link>
-            </NavbarText> */}
           </Nav>
           <NavbarText>
             <span
