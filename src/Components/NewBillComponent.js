@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
 
-export const NewAccountComponent = () => {
+export const NewBillComponent = () => {
   const [invoice, setInvoice] = useState({
     customerId: "",
     name: "",
@@ -16,9 +16,10 @@ export const NewAccountComponent = () => {
     currentRead: "",
     unitPrice: "",
     amount: "",
-    issueDate: moment(new Date()).format("MM/DD/YYYY"),
+    issueDate: moment(new Date()).format("MMM/DD/YYYY"),
   });
   const navigate = useNavigate();
+
   const handleCancel = () => {
     navigate("/bill");
   };
@@ -27,12 +28,13 @@ export const NewAccountComponent = () => {
     setInvoice({ ...invoice, [e.target.name]: e.target.value });
     console.log("invoice", invoice);
   };
-  const saveNewAccountTODB = async (e) => {
+  const saveNewBillTODB = async (e) => {
     e.preventDefault();
     await axios
       .post("http://localhost:8181/save", invoice)
       .then((response) => {
         setInvoice(response.data);
+        console.log(response.data);
       })
       .catch((err) => console.log(err));
   };
@@ -41,10 +43,10 @@ export const NewAccountComponent = () => {
     <div style={{ minHeight: "100vh", backgroundColor: "#FFFFE0" }}>
       <div style={{ marginTop: "-3%" }}>
         <div className="modal-dialog" style={{ padding: "2%" }}>
-          <div className="modal-content" style={{ backgroundColor: "#d9534f" }}>
+          <div className="modal-content" style={{ backgroundColor: "#8bc3d9" }}>
             <div className="modal-header">
               <h5 className="modal-title" id="exampleModalLabel">
-                Add new account
+                Add new bill
               </h5>
               <button
                 type="button"
@@ -134,7 +136,7 @@ export const NewAccountComponent = () => {
                 type="Date"
                 min={moment().toDate().toUTCString()}
                 max={moment().toDate().toUTCString()}
-                placeholder="YYYY-MM-DD"
+                placeholder="MM-DD-YYYY"
                 className="form-control my-2"
                 name="issueDate"
                 onChange={handleOnChange}
@@ -153,7 +155,7 @@ export const NewAccountComponent = () => {
               <button
                 type="button"
                 className="btn btn-success"
-                onClick={saveNewAccountTODB}
+                onClick={saveNewBillTODB}
               >
                 Save changes
               </button>

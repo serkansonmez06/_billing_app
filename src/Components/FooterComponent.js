@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const FooterComponent = () => {
   const linkStyle = { color: "white", textDecoration: "none" };
   const styleFooter = {
-    height: "70px",
+    minHeight: "100px",
     // left: 0,
     // right: 0,
     // bottom: 0,
@@ -13,6 +13,7 @@ const FooterComponent = () => {
     textAlign: "center",
     zIndex: 5,
     marginTop: "-8px",
+    padding: "10px",
   };
   return (
     <div>
@@ -70,6 +71,7 @@ const FooterComponent = () => {
             />
           </a>
         </div>
+        <br />
         <div>
           <Link
             to="/contact"
@@ -77,9 +79,10 @@ const FooterComponent = () => {
             data-toggle="tooltip"
             title="Contact US"
           >
-            Contact Us &nbsp;&nbsp;&nbsp;
+            <span style={{ textDecoration: "underline" }}> Contact Us</span>
           </Link>
         </div>
+        <br />
 
         <p> &copy; {new Date().getFullYear()} All Rights Reserved</p>
       </div>

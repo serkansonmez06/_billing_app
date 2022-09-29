@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import BillComponent from "./BillComponent";
 import { ContactComponent } from "./ContactComponent";
 import DashboardComponent from "./DashboardComponent";
-import { NewAccountComponent } from "./NewAccountComponent";
+import { NewBillComponent } from "./NewBillComponent";
 import UsersComponent from "./UsersComponent";
 
 const HomeComponent = () => {
@@ -14,7 +14,7 @@ const HomeComponent = () => {
         <Route path="/bill" element={<BillComponent />} />
         <Route path="/users" element={<UsersComponent />} />
         <Route path="/contact" element={<ContactComponent />} />
-        <Route path="/newaccount" element={<NewAccountComponent />} />
+        <Route path="/newaccount" element={<NewBillComponent />} />
       </Routes>
     </div>
   );
