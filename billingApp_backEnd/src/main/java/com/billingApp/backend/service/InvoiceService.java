@@ -49,6 +49,8 @@ public class InvoiceService {
 		existingInvoiceInfo.setAddress(invoiceInfo.getAddress());
 		existingInvoiceInfo.setCity(invoiceInfo.getCity());
 		existingInvoiceInfo.setState(invoiceInfo.getState());
+		existingInvoiceInfo.setCurrentRead(invoiceInfo.getCurrentRead());
+		existingInvoiceInfo.setPreviousRead(invoiceInfo.getPreviousRead());
 		existingInvoiceInfo.setAmount(invoiceInfo.getAmount());
 		existingInvoiceInfo.setIssueDate(invoiceInfo.getIssueDate());
 

@@ -20,7 +20,7 @@ import com.billingApp.backend.entity.Users;
 import com.billingApp.backend.service.UsersService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3002")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UsersController {
 
 	@Autowired

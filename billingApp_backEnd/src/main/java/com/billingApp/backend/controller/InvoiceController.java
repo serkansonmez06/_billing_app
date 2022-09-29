@@ -20,7 +20,7 @@ import com.billingApp.backend.entity.InvoiceInfo;
 import com.billingApp.backend.service.InvoiceService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3002")
+@CrossOrigin(origins = "http://localhost:3000")
 public class InvoiceController {
 
 	@Autowired
