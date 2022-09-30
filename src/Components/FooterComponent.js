@@ -12,8 +12,7 @@ const FooterComponent = () => {
     color: "white",
     textAlign: "center",
     zIndex: 5,
-    marginTop: "-8px",
-    padding: "10px",
+    padding: "6px",
   };
   return (
     <div>

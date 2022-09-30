@@ -40,7 +40,13 @@ export const NewBillComponent = () => {
   };
 
   return (
-    <div style={{ minHeight: "100vh", backgroundColor: "#FFFFE0" }}>
+    <div
+      style={{
+        minHeight: "100vh",
+        backgroundColor: "#FFFFE0",
+        padding: "50px",
+      }}
+    >
       <div style={{ marginTop: "-3%" }}>
         <div className="modal-dialog" style={{ padding: "2%" }}>
           <div className="modal-content" style={{ backgroundColor: "#8bc3d9" }}>
@@ -156,6 +162,7 @@ export const NewBillComponent = () => {
                 type="button"
                 className="btn btn-success"
                 onClick={saveNewBillTODB}
+                onClick={handleCancel}
               >
                 Save changes
               </button>
