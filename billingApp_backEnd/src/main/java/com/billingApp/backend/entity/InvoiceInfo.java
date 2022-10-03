@@ -1,6 +1,7 @@
 package com.billingApp.backend.entity;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -25,16 +26,21 @@ public class InvoiceInfo {
 	private int previousRead;
 	private int unitPrice;
 	private double amount;
+	private boolean paid;
 	@DateTimeFormat(pattern = "YYYY-MM-DD")
 
-	private Date issueDate;
+	private LocalDate issueDate;
+
+	@DateTimeFormat(pattern = "YYYY-MM-DD")
+	private LocalDate dueDate;
 
 	public InvoiceInfo() {
 
 	}
 
 	public InvoiceInfo(int id, int customerId, String name, long phone, String email, String address, String city,
-			String state, int currentRead, int previousRead, int unitPrice, double amount, Date issueDate) {
+			String state, int currentRead, int previousRead, int unitPrice, double amount, boolean paid,
+			LocalDate issueDate, LocalDate dueDate) {
 		super();
 		this.id = id;
 		this.customerId = customerId;
@@ -48,7 +54,9 @@ public class InvoiceInfo {
 		this.previousRead = previousRead;
 		this.unitPrice = unitPrice;
 		this.amount = amount;
+		this.paid = paid;
 		this.issueDate = issueDate;
+		this.dueDate = dueDate;
 	}
 
 	public int getId() {
@@ -149,20 +157,38 @@ public class InvoiceInfo {
 		this.amount = ((this.currentRead - this.previousRead) * this.unitPrice);
 	}
 
-	public Date getIssueDate() {
+	public LocalDate getIssueDate() {
 		return issueDate;
 	}
 
-	public void setIssueDate(Date issueDate) {
+	public void setIssueDate(LocalDate issueDate) {
 		this.issueDate = issueDate;
+	}
+
+	public boolean isPaid() {
+		return paid;
+	}
+
+	public void setPaid(boolean paid) {
+		this.paid = paid;
+	}
+
+	public LocalDate getDueDate() {
+		this.dueDate = this.issueDate.plus(14, ChronoUnit.DAYS);
+		return dueDate;
+	}
+
+	public void setDueDate(LocalDate dueDate) {
+
+		this.dueDate = this.issueDate.plus(14, ChronoUnit.DAYS);
 	}
 
 	@Override
 	public String toString() {
-		return "InvoiceInfo [id=" + id + ",CustomerInfo [customerId=\" + customerId + \", name=" + name + ", phone="
-				+ phone + ", email=" + email + ", address=" + address + ", city=" + city + ", state=" + state
-				+ ", currentRead=" + currentRead + ", previousRead=" + previousRead + ", unitPrice=" + unitPrice
-				+ ", amount=" + amount + ", issueDate=" + issueDate + "]";
+		return "InvoiceInfo [id=" + id + ", customerId=" + customerId + ", name=" + name + ", phone=" + phone
+				+ ", email=" + email + ", address=" + address + ", city=" + city + ", state=" + state + ", currentRead="
+				+ currentRead + ", previousRead=" + previousRead + ", unitPrice=" + unitPrice + ", amount=" + amount
+				+ ", paid=" + paid + ", issueDate=" + issueDate + ", dueDate=" + dueDate + "]";
 	}
 
 }
