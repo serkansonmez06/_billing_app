@@ -22,11 +22,12 @@ export const NewBillComponent = () => {
 
   const handleCancel = () => {
     navigate("/bill");
+    // console.log("navigate");
   };
   const handleOnChange = (e) => {
     e.preventDefault();
     setInvoice({ ...invoice, [e.target.name]: e.target.value });
-    console.log("invoice", invoice);
+    //console.log("invoice", invoice);
   };
   const saveNewBillTODB = async (e) => {
     e.preventDefault();
@@ -34,7 +35,7 @@ export const NewBillComponent = () => {
       .post("http://localhost:8181/save", invoice)
       .then((response) => {
         setInvoice(response.data);
-        console.log(response.data);
+        //console.log(response.data);
       })
       .catch((err) => console.log(err));
   };
@@ -43,13 +44,13 @@ export const NewBillComponent = () => {
     <div
       style={{
         minHeight: "100vh",
-        backgroundColor: "#FFFFE0",
+        backgroundColor: "#C3D9D4",
         padding: "50px",
       }}
     >
       <div style={{ marginTop: "-3%" }}>
         <div className="modal-dialog" style={{ padding: "2%" }}>
-          <div className="modal-content" style={{ backgroundColor: "#8bc3d9" }}>
+          <div className="modal-content" style={{ backgroundColor: "#E8F27A" }}>
             <div className="modal-header">
               <h5 className="modal-title" id="exampleModalLabel">
                 Add new bill
@@ -128,7 +129,11 @@ export const NewBillComponent = () => {
                 name="currentRead"
                 onChange={handleOnChange}
               />
-              <span className="input-group-text" id="basic-addon1">
+              <span
+                className="input-group-text"
+                id="basic-addon1"
+                style={{ backgroundColor: "#E8F27A" }}
+              >
                 $
                 <input
                   type="text"
@@ -161,8 +166,10 @@ export const NewBillComponent = () => {
               <button
                 type="button"
                 className="btn btn-success"
-                onClick={saveNewBillTODB}
-                onClick={handleCancel}
+                onClick={() => {
+                  saveNewBillTODB();
+                  handleCancel();
+                }}
               >
                 Save changes
               </button>

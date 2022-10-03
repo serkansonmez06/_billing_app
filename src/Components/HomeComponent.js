@@ -4,6 +4,7 @@ import BillComponent from "./BillComponent";
 import { ContactComponent } from "./ContactComponent";
 import DashboardComponent from "./DashboardComponent";
 import { NewBillComponent } from "./NewBillComponent";
+import NotFoundComponent from "./NotFoundComponent";
 import UsersComponent from "./UsersComponent";
 
 const HomeComponent = () => {
@@ -15,6 +16,7 @@ const HomeComponent = () => {
         <Route path="/users" element={<UsersComponent />} />
         <Route path="/contact" element={<ContactComponent />} />
         <Route path="/newaccount" element={<NewBillComponent />} />
+        <Route path="*" element={<NotFoundComponent />} />
       </Routes>
     </div>
   );

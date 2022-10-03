@@ -3,8 +3,9 @@ import React, { useEffect, useState } from "react";
 import { selectUser } from "../Components/redux/userSlice";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import moment from "moment";
+import moment, { utc } from "moment";
 import "../App/App.css";
+import zIndex from "@mui/material/styles/zIndex";
 
 const BillComponent = () => {
   const [data, setData] = useState({
@@ -21,11 +22,16 @@ const BillComponent = () => {
     previousRead: "",
     state: "",
     unitPrice: "",
+    dueDate: "",
   });
 
   const [invoice, setInvoice] = useState([]);
   const navigate = useNavigate();
   const [admin, setAdmin] = useState([]);
+  const [searchDate, setSearchDate] = useState({
+    startDate: moment(new Date()).format("MMM/DD/YYYY"),
+    endDate: moment(new Date()).format("MMM/DD/YYYY"),
+  });
   const user = useSelector(selectUser);
   const handleModal = (
     address,
@@ -64,6 +70,13 @@ const BillComponent = () => {
     );
   };
 
+  const handleOnChange = (e) => {
+    e.preventDefault();
+    setSearchDate({ ...searchDate, [e.target.name]: e.target.value });
+    console.log("/start", searchDate.startDate);
+    console.log("/end", searchDate.endDate);
+  };
+
   const getAdminInfo = async () => {
     await axios
       .get(`http://localhost:8181/admin`)
@@ -96,6 +109,15 @@ const BillComponent = () => {
     } else {
     }
   };
+
+  const handleFilter = (e) => {
+    const filterDate = invoice.filter((a) => {
+      return (
+        a.issueDate >= searchDate.startDate && a.issueDate <= searchDate.endDate
+      );
+    });
+    setInvoice(filterDate);
+  };
   useEffect(() => {
     handleSubmit();
     getAdminInfo();
@@ -103,7 +125,7 @@ const BillComponent = () => {
   return (
     <div
       style={{
-        backgroundColor: "#f5d4a4",
+        backgroundColor: "#C3D9D4",
         marginTop: "-30px",
         minHeight: "100vh",
       }}
@@ -126,6 +148,54 @@ const BillComponent = () => {
                 >
                   <i className="fa-solid fa-circle-plus"></i> add new bill
                 </button>
+                <br />
+                <br />
+                <br />
+
+                <div
+                  className="d-flex align-items-center"
+                  style={{ marginLeft: "38%" }}
+                >
+                  <div className="d-flex align-items-start">
+                    <div className="col-xs-2">
+                      <span style={{ color: "green", fontWeight: "bold" }}>
+                        From:{" "}
+                      </span>
+                      <input
+                        type="date"
+                        placeholder="MM-DD-YYYY"
+                        className="form-control my-2 "
+                        name="startDate"
+                        onChange={handleOnChange}
+                      />
+                    </div>
+                    <div className="col-xs-2" style={{ marginLeft: "2%" }}>
+                      <span style={{ color: "green", fontWeight: "bold" }}>
+                        To:
+                      </span>
+                      <input
+                        type="date"
+                        placeholder="MM-DD-YYYY"
+                        className="form-control my-2 col-xs-2"
+                        name="endDate"
+                        onChange={handleOnChange}
+                      />
+                    </div>
+                    <div
+                      className="col-xs-2"
+                      style={{ marginTop: "3%", marginLeft: "10%" }}
+                    >
+                      <br />
+
+                      <button
+                        className="btn btn-info"
+                        onClick={(e) => handleFilter(e)}
+                      >
+                        Filter
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -145,7 +215,10 @@ const BillComponent = () => {
                         <div
                           key={key}
                           className="col-sm-3 m-1 d-flex justify-space-between"
-                          style={{ marginLeft: "50px", width: "30%" }}
+                          style={{
+                            marginLeft: "50px",
+                            width: "30%",
+                          }}
                         >
                           <div
                             className="card "
@@ -191,10 +264,9 @@ const BillComponent = () => {
                                         fontWeight: "bold",
                                       }}
                                     >
-                                      Date:
+                                      Bill Period:
                                     </span>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+                                    &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
                                     {moment
                                       .utc(item.issueDate)
                                       .format("MMM/DD/YYYY")}
@@ -211,9 +283,23 @@ const BillComponent = () => {
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     &nbsp; ${item.amount.toFixed(2)}
                                   </h5>
+                                  <h5 className="card-title">
+                                    <span
+                                      style={{
+                                        color: "red",
+                                        fontWeight: "bold",
+                                      }}
+                                    >
+                                      Due Date:
+                                    </span>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
+                                    {moment
+                                      .utc(item.dueDate)
+                                      .format("MMM/DD/YYYY")}
+                                  </h5>
                                 </div>
                                 <div
-                                  style={{ marginTop: "25%" }}
+                                  style={{ marginTop: "32%" }}
                                   className="d-flex justify-content-between"
                                 >
                                   <button
@@ -390,10 +476,58 @@ const BillComponent = () => {
                   marginTop: "-90px",
                 }}
               >
+                <br />
+                <br />
+                <br />
+                <div
+                  className="d-flex align-items-center"
+                  style={{ marginLeft: "33%" }}
+                >
+                  <div className="d-flex align-items-start">
+                    <div className="col-xs-2">
+                      <span style={{ color: "green", fontWeight: "bold" }}>
+                        From:
+                      </span>
+                      <input
+                        type="date"
+                        placeholder="MM-DD-YYYY"
+                        className="form-control my-2 "
+                        name="startDate"
+                        onChange={handleOnChange}
+                      />
+                    </div>
+                    <div className="col-xs-2" style={{ marginLeft: "2%" }}>
+                      <span style={{ color: "green", fontWeight: "bold" }}>
+                        To:
+                      </span>
+                      <input
+                        type="date"
+                        placeholder="MM-DD-YYYY"
+                        className="form-control my-2 col-xs-2"
+                        name="endDate"
+                        onChange={handleOnChange}
+                      />
+                    </div>
+                    <div
+                      className="col-xs-2"
+                      style={{ marginTop: "2%", marginLeft: "10%" }}
+                    >
+                      <br />
+
+                      <button
+                        className="btn btn-info"
+                        onClick={(e) => handleFilter(e)}
+                      >
+                        Filter
+                      </button>
+                    </div>
+                  </div>
+                </div>
                 <div className="row mt-5 ml-5 ">
                   {invoice
                     .sort((a, b) => moment(a.issueDate) - moment(b.issueDate))
-                    .filter((a, b) => a.email === user.email)
+                    .filter((a) => a.email === user.email)
+
                     .map((item, key) => (
                       <div
                         key={key}
@@ -408,7 +542,10 @@ const BillComponent = () => {
                           <div className="card-body">
                             <div style={{ height: "80%", width: "100%" }}>
                               <div
-                                style={{ height: "30%", marginLeft: "15%" }}
+                                style={{
+                                  height: "30%",
+                                  marginLeft: "15%",
+                                }}
                                 className="text-justify"
                               >
                                 <h5 className="card-title">
@@ -464,8 +601,22 @@ const BillComponent = () => {
                                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                   &nbsp; ${item.amount.toFixed(2)}
                                 </h5>
+                                <h5 className="card-title">
+                                  <span
+                                    style={{
+                                      color: "red",
+                                      fontWeight: "bold",
+                                    }}
+                                  >
+                                    Due Date:
+                                  </span>
+                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
+                                  {moment
+                                    .utc(item.dueDate)
+                                    .format("MMM/DD/YYYY")}
+                                </h5>
                               </div>
-                              <div style={{ marginTop: "25%" }}>
+                              <div style={{ marginTop: "32%" }}>
                                 <button
                                   type="button"
                                   className="btn btn-primary"
