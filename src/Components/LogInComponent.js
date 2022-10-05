@@ -107,7 +107,7 @@ const LogInComponent = () => {
                     Don't have an account?&nbsp;&nbsp;&nbsp;&nbsp;
                     <button
                       className="btn btn-success"
-                      style={{ color: "#393f81" }}
+                      style={{ color: "white" }}
                       onClick={() => {
                         setSignInLog(true);
                       }}

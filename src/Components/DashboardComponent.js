@@ -121,7 +121,7 @@ function DashboardComponent() {
                   fontSize: "25px",
                 }}
               >
-                <i class="fa-solid fa-magnifying-glass"></i> Help Making
+                <i className="fa-solid fa-magnifying-glass"></i> Help Making
                 Payments
               </div>
             </div>

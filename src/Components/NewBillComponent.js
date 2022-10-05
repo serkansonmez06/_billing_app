@@ -36,6 +36,7 @@ export const NewBillComponent = () => {
       .then((response) => {
         setInvoice(response.data);
         //console.log(response.data);
+        window.location.reload();
       })
       .catch((err) => console.log(err));
   };
@@ -129,6 +130,7 @@ export const NewBillComponent = () => {
                 name="currentRead"
                 onChange={handleOnChange}
               />
+
               <span
                 className="input-group-text"
                 id="basic-addon1"
@@ -166,9 +168,9 @@ export const NewBillComponent = () => {
               <button
                 type="button"
                 className="btn btn-success"
-                onClick={() => {
-                  saveNewBillTODB();
-                  handleCancel();
+                onClick={(e) => {
+                  saveNewBillTODB(e);
+                  handleCancel(e);
                 }}
               >
                 Save changes

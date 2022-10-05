@@ -13,8 +13,7 @@ import FooterComponent from "../Components/FooterComponent";
 function App() {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
-  //will listen any authentication, if you refresh your page it will
-  //store info so you dont need to log in each time when ur page is refresh
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((userAuth) => {
       if (userAuth) {

@@ -3,9 +3,8 @@ import React, { useEffect, useState } from "react";
 import { selectUser } from "../Components/redux/userSlice";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import moment, { utc } from "moment";
+import moment from "moment";
 import "../App/App.css";
-import zIndex from "@mui/material/styles/zIndex";
 
 const BillComponent = () => {
   const [data, setData] = useState({
@@ -23,6 +22,7 @@ const BillComponent = () => {
     state: "",
     unitPrice: "",
     dueDate: "",
+    isPaid: false,
   });
 
   const [invoice, setInvoice] = useState([]);
@@ -46,7 +46,9 @@ const BillComponent = () => {
     phone,
     previousRead,
     state,
-    unitPrice
+    unitPrice,
+    dueDate,
+    paid
   ) => {
     setData({
       address,
@@ -62,19 +64,21 @@ const BillComponent = () => {
       previousRead,
       state,
       unitPrice,
+      dueDate,
+      paid,
     });
-    console.log(
-      "",
+    // console.log(
+    //   "",
 
-      amount
-    );
+    //   paid
+    //);
   };
 
   const handleOnChange = (e) => {
     e.preventDefault();
     setSearchDate({ ...searchDate, [e.target.name]: e.target.value });
-    console.log("/start", searchDate.startDate);
-    console.log("/end", searchDate.endDate);
+    // console.log("/start", searchDate.startDate);
+    // console.log("/end", searchDate.endDate);
   };
 
   const getAdminInfo = async () => {
@@ -118,6 +122,16 @@ const BillComponent = () => {
     });
     setInvoice(filterDate);
   };
+
+  const updateBill = (id) => {
+    //console.log("update " + id);
+    navigate("/update/" + id);
+  };
+
+  const handlePayment = (id) => {
+    //console.log("payment " + id);
+    navigate("/payment/" + id);
+  };
   useEffect(() => {
     handleSubmit();
     getAdminInfo();
@@ -131,7 +145,7 @@ const BillComponent = () => {
       }}
     >
       <div>
-        {admin === user.email ? (
+        {admin.toString().toUpperCase() === user.email.toUpperCase() ? (
           <div>
             <div style={{ padding: "10px" }}>
               <div style={{ marginBottom: "20px", marginTop: "70px" }}>
@@ -186,7 +200,6 @@ const BillComponent = () => {
                       style={{ marginTop: "3%", marginLeft: "10%" }}
                     >
                       <br />
-
                       <button
                         className="btn btn-info"
                         onClick={(e) => handleFilter(e)}
@@ -234,7 +247,7 @@ const BillComponent = () => {
                                   <h5 className="card-title">
                                     <span
                                       style={{
-                                        color: "red",
+                                        color: "#ffa500",
                                         fontWeight: "bold",
                                       }}
                                     >
@@ -245,7 +258,7 @@ const BillComponent = () => {
                                   <h5 className="card-title">
                                     <span
                                       style={{
-                                        color: "red",
+                                        color: "#ffa500",
                                         fontWeight: "bold",
                                       }}
                                     >
@@ -260,7 +273,7 @@ const BillComponent = () => {
                                   <h5 className="card-title">
                                     <span
                                       style={{
-                                        color: "red",
+                                        color: "#ffa500",
                                         fontWeight: "bold",
                                       }}
                                     >
@@ -274,7 +287,7 @@ const BillComponent = () => {
                                   <h5 className="card-title">
                                     <span
                                       style={{
-                                        color: "red",
+                                        color: "#ffa500",
                                         fontWeight: "bold",
                                       }}
                                     >
@@ -286,7 +299,7 @@ const BillComponent = () => {
                                   <h5 className="card-title">
                                     <span
                                       style={{
-                                        color: "red",
+                                        color: "#ffa500",
                                         fontWeight: "bold",
                                       }}
                                     >
@@ -297,9 +310,44 @@ const BillComponent = () => {
                                       .utc(item.dueDate)
                                       .format("MMM/DD/YYYY")}
                                   </h5>
+                                  <h5 className="card-title">
+                                    <span
+                                      style={{
+                                        color: "#ffa500",
+                                        fontWeight: "bold",
+                                      }}
+                                    >
+                                      Paid:
+                                    </span>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
+                                    {item.isPaid ? (
+                                      <span
+                                        style={{
+                                          color: "green",
+                                          fontWeight: "bold",
+                                        }}
+                                      >
+                                        Paid
+                                      </span>
+                                    ) : (
+                                      <span
+                                        style={{
+                                          color: "red",
+                                          fontWeight: "bold",
+                                        }}
+                                      >
+                                        UnPaid
+                                      </span>
+                                    )}
+                                  </h5>
                                 </div>
                                 <div
-                                  style={{ marginTop: "32%" }}
+                                  style={{
+                                    marginTop: "42%",
+                                    marginLeft: "15%",
+                                    marginRight: "8%",
+                                  }}
                                   className="d-flex justify-content-between"
                                 >
                                   <button
@@ -312,6 +360,17 @@ const BillComponent = () => {
                                     }}
                                   >
                                     <i className="fa-solid fa-trash-can"></i>
+                                  </button>
+                                  <button
+                                    className="btn btn-warning"
+                                    type="button"
+                                    data-toggle="tooltip"
+                                    title="Update bill"
+                                    onClick={() => {
+                                      updateBill(item.id);
+                                    }}
+                                  >
+                                    UPDATE
                                   </button>
                                   <button
                                     type="button"
@@ -332,7 +391,9 @@ const BillComponent = () => {
                                         item.phone,
                                         item.previousRead,
                                         item.state,
-                                        item.unitPrice
+                                        item.unitPrice,
+                                        item.dueDate,
+                                        item.isPaid
                                       )
                                     }
                                   >
@@ -436,8 +497,11 @@ const BillComponent = () => {
                                           type="button"
                                           className="btn btn-success"
                                           data-dismiss="modal"
+                                          onClick={() => {
+                                            handlePayment(data.id);
+                                          }}
                                         >
-                                          Pay
+                                          Make Payment
                                         </button>
                                         <button
                                           type="button"
@@ -526,8 +590,9 @@ const BillComponent = () => {
                 <div className="row mt-5 ml-5 ">
                   {invoice
                     .sort((a, b) => moment(a.issueDate) - moment(b.issueDate))
-                    .filter((a) => a.email === user.email)
-
+                    .filter(
+                      (a) => a.email.toUpperCase() === user.email.toUpperCase()
+                    )
                     .map((item, key) => (
                       <div
                         key={key}
@@ -551,7 +616,7 @@ const BillComponent = () => {
                                 <h5 className="card-title">
                                   <span
                                     style={{
-                                      color: "red",
+                                      color: "#ffa500",
                                       fontWeight: "bold",
                                     }}
                                   >
@@ -562,7 +627,7 @@ const BillComponent = () => {
                                 <h5 className="card-title">
                                   <span
                                     style={{
-                                      color: "red",
+                                      color: "#ffa500",
                                       fontWeight: "bold",
                                     }}
                                   >
@@ -577,14 +642,13 @@ const BillComponent = () => {
                                 <h5 className="card-title">
                                   <span
                                     style={{
-                                      color: "red",
+                                      color: "#ffa500",
                                       fontWeight: "bold",
                                     }}
                                   >
-                                    Date:
+                                    Issue Date:
                                   </span>
-                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                  &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                   {moment
                                     .utc(item.issueDate)
                                     .format("MMM/DD/YYYY")}
@@ -592,7 +656,7 @@ const BillComponent = () => {
                                 <h5 className="card-title">
                                   <span
                                     style={{
-                                      color: "red",
+                                      color: "#ffa500",
                                       fontWeight: "bold",
                                     }}
                                   >
@@ -604,7 +668,7 @@ const BillComponent = () => {
                                 <h5 className="card-title">
                                   <span
                                     style={{
-                                      color: "red",
+                                      color: "#ffa500",
                                       fontWeight: "bold",
                                     }}
                                   >
@@ -615,8 +679,39 @@ const BillComponent = () => {
                                     .utc(item.dueDate)
                                     .format("MMM/DD/YYYY")}
                                 </h5>
+                                <h5 className="card-title">
+                                  <span
+                                    style={{
+                                      color: "#ffa500",
+                                      fontWeight: "bold",
+                                    }}
+                                  >
+                                    Paid:
+                                  </span>
+                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
+                                  {item.isPaid ? (
+                                    <span
+                                      style={{
+                                        color: "green",
+                                        fontWeight: "bold",
+                                      }}
+                                    >
+                                      Paid
+                                    </span>
+                                  ) : (
+                                    <span
+                                      style={{
+                                        color: "red",
+                                        fontWeight: "bold",
+                                      }}
+                                    >
+                                      UnPaid
+                                    </span>
+                                  )}
+                                </h5>
                               </div>
-                              <div style={{ marginTop: "32%" }}>
+                              <div style={{ marginTop: "42%" }}>
                                 <button
                                   type="button"
                                   className="btn btn-primary"
@@ -636,7 +731,8 @@ const BillComponent = () => {
                                       item.phone,
                                       item.previousRead,
                                       item.state,
-                                      item.unitPrice
+                                      item.unitPrice,
+                                      item.isPaid
                                     )
                                   }
                                 >
@@ -740,8 +836,11 @@ const BillComponent = () => {
                                         type="button"
                                         className="btn btn-success"
                                         data-dismiss="modal"
+                                        onClick={() => {
+                                          handlePayment(data.id);
+                                        }}
                                       >
-                                        Pay
+                                        Make Payment
                                       </button>
                                       <button
                                         type="button"
