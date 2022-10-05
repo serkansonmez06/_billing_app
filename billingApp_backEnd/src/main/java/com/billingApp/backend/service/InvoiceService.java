@@ -44,6 +44,7 @@ public class InvoiceService {
 				.orElseThrow(() -> new ResourceNotFoundException(
 						"Cant update data for requested id number: " + invoiceInfo.getId()));
 		existingInvoiceInfo.setName(invoiceInfo.getName());
+		existingInvoiceInfo.setCustomerId(invoiceInfo.getCustomerId());
 		existingInvoiceInfo.setPhone(invoiceInfo.getPhone());
 		existingInvoiceInfo.setEmail(invoiceInfo.getEmail());
 		existingInvoiceInfo.setAddress(invoiceInfo.getAddress());
@@ -53,6 +54,9 @@ public class InvoiceService {
 		existingInvoiceInfo.setPreviousRead(invoiceInfo.getPreviousRead());
 		existingInvoiceInfo.setAmount(invoiceInfo.getAmount());
 		existingInvoiceInfo.setIssueDate(invoiceInfo.getIssueDate());
+		existingInvoiceInfo.setDueDate(invoiceInfo.getDueDate());
+		existingInvoiceInfo.setIsPaid(invoiceInfo.getIsPaid());
+		;
 
 		return invoiceRepository.save(existingInvoiceInfo);
 

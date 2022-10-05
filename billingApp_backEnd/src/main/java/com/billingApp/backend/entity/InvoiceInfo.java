@@ -26,7 +26,7 @@ public class InvoiceInfo {
 	private int previousRead;
 	private int unitPrice;
 	private double amount;
-	private boolean paid;
+	private boolean isPaid;
 	@DateTimeFormat(pattern = "YYYY-MM-DD")
 
 	private LocalDate issueDate;
@@ -39,7 +39,7 @@ public class InvoiceInfo {
 	}
 
 	public InvoiceInfo(int id, int customerId, String name, long phone, String email, String address, String city,
-			String state, int currentRead, int previousRead, int unitPrice, double amount, boolean paid,
+			String state, int currentRead, int previousRead, int unitPrice, double amount, boolean isPaid,
 			LocalDate issueDate, LocalDate dueDate) {
 		super();
 		this.id = id;
@@ -54,7 +54,7 @@ public class InvoiceInfo {
 		this.previousRead = previousRead;
 		this.unitPrice = unitPrice;
 		this.amount = amount;
-		this.paid = paid;
+		this.isPaid = isPaid;
 		this.issueDate = issueDate;
 		this.dueDate = dueDate;
 	}
@@ -157,6 +157,17 @@ public class InvoiceInfo {
 		this.amount = ((this.currentRead - this.previousRead) * this.unitPrice);
 	}
 
+	public LocalDate getDueDate() {
+		this.dueDate = this.issueDate.plus(14, ChronoUnit.DAYS);
+
+		return this.dueDate;
+	}
+
+	public void setDueDate(LocalDate dueDate) {
+
+		this.dueDate = this.issueDate.plus(14, ChronoUnit.DAYS);
+	}
+
 	public LocalDate getIssueDate() {
 		return issueDate;
 	}
@@ -165,22 +176,12 @@ public class InvoiceInfo {
 		this.issueDate = issueDate;
 	}
 
-	public boolean isPaid() {
-		return paid;
+	public boolean getIsPaid() {
+		return isPaid;
 	}
 
-	public void setPaid(boolean paid) {
-		this.paid = paid;
-	}
-
-	public LocalDate getDueDate() {
-		this.dueDate = this.issueDate.plus(14, ChronoUnit.DAYS);
-		return dueDate;
-	}
-
-	public void setDueDate(LocalDate dueDate) {
-
-		this.dueDate = this.issueDate.plus(14, ChronoUnit.DAYS);
+	public void setIsPaid(boolean isPaid) {
+		this.isPaid = isPaid;
 	}
 
 	@Override
@@ -188,7 +189,7 @@ public class InvoiceInfo {
 		return "InvoiceInfo [id=" + id + ", customerId=" + customerId + ", name=" + name + ", phone=" + phone
 				+ ", email=" + email + ", address=" + address + ", city=" + city + ", state=" + state + ", currentRead="
 				+ currentRead + ", previousRead=" + previousRead + ", unitPrice=" + unitPrice + ", amount=" + amount
-				+ ", paid=" + paid + ", issueDate=" + issueDate + ", dueDate=" + dueDate + "]";
+				+ ", isPaid=" + isPaid + ", issueDate=" + issueDate + ", dueDate=" + dueDate + "]";
 	}
 
 }
