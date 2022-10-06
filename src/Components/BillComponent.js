@@ -92,7 +92,7 @@ const BillComponent = () => {
   };
   const handleSubmit = async () => {
     await axios
-      .get(`http://localhost:8181/invoices`)
+      .get(process.env.REACT_APP_BASE_URL)
       .then((response) => {
         setInvoice(response.data);
         console.log(response.data);
@@ -106,7 +106,7 @@ const BillComponent = () => {
     const confirmm = window.confirm("Are you sure you want to delete bill");
 
     if (confirmm) {
-      await axios.delete(`http://localhost:8181/invoices/` + id).then(() => {
+      await axios.delete(process.env.REACT_APP_BASE_URL + "/" + id).then(() => {
         const remainingData = invoice.filter((i) => i.id !== id);
         setInvoice(remainingData);
       });

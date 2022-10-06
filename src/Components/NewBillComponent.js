@@ -32,7 +32,7 @@ export const NewBillComponent = () => {
   const saveNewBillTODB = async (e) => {
     e.preventDefault();
     await axios
-      .post("http://localhost:8181/save", invoice)
+      .post(process.env.REACT_APP_BASE_URL_SAVE, invoice)
       .then((response) => {
         setInvoice(response.data);
         //console.log(response.data);

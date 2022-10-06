@@ -22,7 +22,7 @@ const NavBarComponent = () => {
 
   const getAdmin = async () => {
     await axios
-      .get("http://localhost:8181/admin")
+      .get(process.env.REACT_APP_BASE_ADMIN)
       .then((response) => {
         setAdminEmailDb({ email: response.data.at(-1) });
         //  console.log(response.data.at(-1));

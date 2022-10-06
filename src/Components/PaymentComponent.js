@@ -16,7 +16,7 @@ function PaymentComponent() {
 
   const handlePayment = async () => {
     await axios
-      .put(`http://localhost:8181/update/`, payment)
+      .put(process.env.REACT_APP_BASE_URL_UPDATE, payment)
       .then((response) => {
         console.log(response.data);
       })
@@ -24,7 +24,7 @@ function PaymentComponent() {
   };
   useEffect(() => {
     axios
-      .get(`http://localhost:8181/invoices/` + id)
+      .get(process.env.REACT_APP_BASE_URL + "/" + id)
       .then((response) => {
         setPayment(response.data);
         console.log(response.data);

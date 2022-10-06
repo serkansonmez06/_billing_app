@@ -48,7 +48,7 @@ const SignUpComponent = () => {
 
   const saveUserToDB = async () => {
     await axios
-      .post("http://localhost:8181/saveUser", user)
+      .post(process.env.REACT_APP_BASE_USER_SAVE, user)
       .then((response) => {
         setUser(response.data);
       })

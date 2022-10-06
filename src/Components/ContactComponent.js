@@ -7,7 +7,7 @@ export const ContactComponent = () => {
 
   const getAdmin = async () => {
     await axios
-      .get(`http://localhost:8181/admin`)
+      .get(process.env.REACT_APP_BASE_ADMIN)
       .then((response) => {
         setAdmin(response.data[0].email);
       })

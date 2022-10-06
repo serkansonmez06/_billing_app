@@ -33,7 +33,7 @@ function UpdateComponent() {
     e.preventDefault();
 
     axios
-      .put(`http://localhost:8181/update/`, invoice)
+      .put(process.env.REACT_APP_BASE_URL_UPDATE, invoice)
       .then((response) => {
         //console.log(response.data);
         navigate("/bill");
@@ -44,7 +44,7 @@ function UpdateComponent() {
   };
   useEffect(() => {
     axios
-      .get(`http://localhost:8181/invoices/` + id)
+      .get(process.env.REACT_APP_BASE_URL + "/" + id)
       .then((response) => {
         setInvoice(response.data);
         // console.log("hey");
