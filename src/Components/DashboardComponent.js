@@ -89,7 +89,7 @@ function DashboardComponent() {
                   fontWeight: "bold",
                 }}
               >
-                <i class="fa-solid fa-money-bill-wheat"></i> Ways to Pay
+                <i className="fa-solid fa-money-bill-wheat"></i> Ways to Pay
               </div>
               <div
                 className="col-sm border-none"
@@ -99,7 +99,7 @@ function DashboardComponent() {
                   fontSize: "25px",
                 }}
               >
-                <i class="fa-sharp fa-solid fa-file-invoice-dollar"></i>
+                <i className="fa-sharp fa-solid fa-file-invoice-dollar"></i>
                 Efficiency
               </div>
               <div
@@ -110,7 +110,7 @@ function DashboardComponent() {
                   fontSize: "25px",
                 }}
               >
-                <i class="fa-sharp fa-solid fa-envelopes-bulk"></i> Bill
+                <i className="fa-sharp fa-solid fa-envelopes-bulk"></i> Bill
                 Delivery Options
               </div>
               <div

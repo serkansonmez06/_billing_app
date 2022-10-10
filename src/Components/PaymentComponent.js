@@ -3,37 +3,57 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 
 function PaymentComponent() {
-  const [payment, setPayment] = useState({
+  const [info, setInfo] = useState({
+    name: "",
+    lastName: "",
+    address: "",
+    city: "",
+    state: "",
+    zipcode: "",
+    cardNumber: "",
+    mm: "",
+    yy: "",
+    cvvCode: "",
     isPaid: false,
   });
+
   const { id } = useParams();
+
   const navigate = useNavigate();
   const handleOnChange = (e) => {
     e.preventDefault();
-    setPayment({ ...payment, [e.target.name]: e.target.value });
-    console.log(payment);
+    setInfo({ ...info, [e.target.name]: e.target.value });
+    console.log(info);
   };
 
-  const handlePayment = async () => {
-    await axios
-      .put(process.env.REACT_APP_BASE_URL_UPDATE, payment)
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((err) => console.log(err));
+  const handlePayment = async (e) => {
+    e.preventDefault();
+
+    if (info.cardNumber.length < 16 || !isNaN(info.cardNumber) === false) {
+      window.alert(
+        "credit card number must be sixteen(16) characters and numeric value"
+      );
+    } else {
+      await axios
+        .put(process.env.REACT_APP_BASE_URL_UPDATE, info)
+        .then((response) => {
+          console.log("response to data", response.data);
+          navigate("/bill");
+        })
+        .catch((err) => console.log(err));
+    }
   };
+
   useEffect(() => {
     axios
       .get(process.env.REACT_APP_BASE_URL + "/" + id)
       .then((response) => {
-        setPayment(response.data);
-        console.log(response.data);
+        setInfo(response.data);
+        console.log("get", response.data);
       })
       .catch((err) => console.log(err));
   }, [id]);
-  const handleNavigate = () => {
-    navigate("/bill");
-  };
+
   return (
     <div
       style={{
@@ -45,15 +65,22 @@ function PaymentComponent() {
       <div className="d-flex justify-content-center" style={{ padding: "5%" }}>
         <div className="d-flex justify-content-center">
           <div style={{ width: "60%", marginTop: "5%" }}>
-            <form>
+            <form
+              onSubmit={(e) => {
+                handlePayment(e);
+              }}
+            >
               <div className="form-row">
                 <div className="form-group col-md-6">
                   <label htmlFor="inputEmail4">First Name</label>
                   <input
                     type="text"
-                    className="form-control"
-                    id="inputEmail"
                     placeholder="First Name"
+                    className="form-control"
+                    name="name"
+                    required
+                    defaultValue={info.name}
+                    onChange={handleOnChange}
                   />
                 </div>
                 <div className="form-group col-md-6">
@@ -61,8 +88,11 @@ function PaymentComponent() {
                   <input
                     type="text"
                     className="form-control"
-                    id="inputPassword4"
                     placeholder="Last Name"
+                    name="lastName"
+                    required
+                    defaultValue={info.lastName}
+                    onChange={handleOnChange}
                   />
                 </div>
               </div>
@@ -73,6 +103,10 @@ function PaymentComponent() {
                   className="form-control"
                   id="inputAddress"
                   placeholder="Address"
+                  name="address"
+                  required
+                  defaultValue={info.address}
+                  onChange={handleOnChange}
                 />
               </div>
               <div className="form-row">
@@ -83,6 +117,10 @@ function PaymentComponent() {
                     className="form-control"
                     id="inputCity"
                     placeholder="City"
+                    name="city"
+                    required
+                    defaultValue={info.city}
+                    onChange={handleOnChange}
                   />
                 </div>
                 <div className="form-group col-md-4">
@@ -100,7 +138,11 @@ function PaymentComponent() {
                     type="text"
                     className="form-control"
                     id="inputZip"
+                    required
                     placeholder="Zip Code"
+                    name="zipcode"
+                    defaultValue={info.zipcode}
+                    onChange={handleOnChange}
                   />
                 </div>
               </div>
@@ -111,37 +153,55 @@ function PaymentComponent() {
                   className="form-control"
                   id="inputAddress"
                   placeholder="Card Number"
+                  name="cardNumber"
+                  required
+                  defaultValue={info.cardNumber}
+                  onChange={handleOnChange}
                 />
               </div>
               <div className="form-row">
-                <div className="form-group col-md-2">
+                <div className="form-group col-md-3">
                   <label htmlFor="inputCity">Expiration</label>
                   <input
-                    type="text"
+                    type="number"
                     className="form-control"
                     id="inputMM"
                     placeholder="MM"
+                    name="mm"
+                    min="1"
+                    max="12"
+                    required
+                    defaultValue={info.mm}
+                    onChange={handleOnChange}
                   />
                 </div>
-                <div className="form-group col-md-2">
+                <div className="form-group col-md-3">
                   <label htmlFor="inputState">Date</label>
                   <input
-                    type="text"
+                    type="number"
                     className="form-control"
                     id="inputYY"
+                    required
+                    min="1980"
+                    max="2005"
                     placeholder="YY"
+                    defaultValue={info.yy}
+                    onChange={handleOnChange}
                   />
                 </div>
                 <div
-                  className="form-group col-md-4 "
-                  style={{ marginLeft: "33%" }}
+                  className="form-group col-md-3 "
+                  style={{ marginLeft: "24%" }}
                 >
                   <label htmlFor="inputZip">CVV/CVD </label>
                   <input
                     type="text"
                     className="form-control"
                     id="inputZip"
-                    placeholder="CVV/CDV"
+                    placeholder="CVV/CVD"
+                    required
+                    defaultValue={info.cvvCode}
+                    onChange={handleOnChange}
                   />
                 </div>
               </div>
@@ -153,7 +213,7 @@ function PaymentComponent() {
                     type="checkbox"
                     id="gridCheck"
                     name="isPaid"
-                    value={payment.isPaid ? true : false}
+                    defaultValue={info.isPaid ? true : false}
                     onChange={(e) => handleOnChange(e)}
                   />
                   <label className="form-check-label" htmlFor="gridCheck">
@@ -161,14 +221,7 @@ function PaymentComponent() {
                   </label>
                 </div>
               </div>
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={(e) => {
-                  handlePayment(e);
-                  handleNavigate();
-                }}
-              >
+              <button type="submit" className="btn btn-primary">
                 Make Payment
               </button>
             </form>
