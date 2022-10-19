@@ -19,7 +19,6 @@ const HomeComponent = () => {
         <Route path="/users" element={<UsersComponent />} />
         <Route path="/contact" element={<ContactComponent />} />
         <Route path="/newaccount" element={<NewBillComponent />} />
-
         <Route path="/update/:id" element={<UpdateComponent />} />
         <Route path="/payment/:id" element={<PaymentComponent />} />
         <Route path="*" element={<NotFoundComponent />} />
