@@ -37,6 +37,7 @@ Unlike the conventional billing system, this computerized software does not requ
 -> Footer component. Will display social media icons and when user clicks on it it will open in new window.
 
 -> if URL is not exist, 404 not found page wil display.
+-> Social media icons are clickable and user can click, and go to social media accout of application in new tab.
 
 
 <img width="947" alt="billing1" src="https://user-images.githubusercontent.com/73310717/197906417-0dd451e9-0093-445e-8797-5d32a002b7b5.png">
